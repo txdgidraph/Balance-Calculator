@@ -1,7 +1,17 @@
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
 
 function CalculatorInterface() {
+  const [inputValue, setInputValue] = useState("");
+  const addNumber = (number) => {
+    setInputValue((prevValue) => prevValue + number);
+  };
+
+  const clearInput = () => {
+    setInputValue("");
+  };
+
+
   return (
     <div>
       <Head>
@@ -29,74 +39,75 @@ function CalculatorInterface() {
                       id="result"
                       placeholder="0"
                       readonly
+                      value={inputValue}
                     />
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-3">
-                    <button class="clear">AC</button>
+                    <button class="clear" onClick={clearInput}>AC</button>
                   </div>
                   <div class="col-xs-3">
-                    <button>&plusmn;</button>
+                    <button onClick={() => addNumber("±")}>&plusmn;</button>
                   </div>
                   <div class="col-xs-3">
-                    <button>&percnt;</button>
+                    <button onClick={() => addNumber("%")}>%</button>
                   </div>
                   <div class="col-xs-3">
-                    <button class="orange">&divide;</button>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-3">
-                    <button>7</button>
-                  </div>
-                  <div class="col-xs-3">
-                    <button>8</button>
-                  </div>
-                  <div class="col-xs-3">
-                    <button>9</button>
-                  </div>
-                  <div class="col-xs-3">
-                    <button class="orange">&times;</button>
+                    <button class="orange" onClick={() => addNumber("÷")}>&divide;</button>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-3">
-                    <button>4</button>
+                    <button onClick={() => addNumber("7")}>7</button>
                   </div>
                   <div class="col-xs-3">
-                    <button>5</button>
+                    <button onClick={() => addNumber("8")}>8</button>
                   </div>
                   <div class="col-xs-3">
-                    <button>6</button>
+                    <button onClick={() => addNumber("9")}>9</button>
                   </div>
                   <div class="col-xs-3">
-                    <button class="orange">&minus;</button>
+                    <button class="orange" onClick={() => addNumber("*")}>&times;</button>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-3">
-                    <button>1</button>
+                    <button onClick={() => addNumber("4")}>4</button>
                   </div>
                   <div class="col-xs-3">
-                    <button>2</button>
+                    <button onClick={() => addNumber("5")}>5</button>
                   </div>
                   <div class="col-xs-3">
-                    <button>3</button>
+                    <button onClick={() => addNumber("6")}>6</button>
                   </div>
                   <div class="col-xs-3">
-                    <button class="orange">+</button>
+                    <button class="orange" onClick={() => addNumber("-")}>&minus;</button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-3">
+                    <button onClick={() => addNumber("1")}>1</button>
+                  </div>
+                  <div class="col-xs-3">
+                    <button onClick={() => addNumber("2")}>2</button>
+                  </div>
+                  <div class="col-xs-3">
+                    <button onClick={() => addNumber("3")}>3</button>
+                  </div>
+                  <div class="col-xs-3">
+                    <button class="orange" onClick={() => addNumber("+")}>+</button>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-6">
-                    <button class="zero">0</button>
+                    <button class="zero" onClick={() => addNumber("0")}>0</button>
                   </div>
                   <div class="col-xs-3">
-                    <button>.</button>
+                    <button onClick={() => addNumber(".")}>.</button>
                   </div>
                   <div class="col-xs-3">
-                    <button class="orange">=</button>
+                    <button class="orange" onClick={() => addNumber("=")}>=</button>
                   </div>
                 </div>
               </div>
