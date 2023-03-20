@@ -4,16 +4,29 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import LoginComponent from "@/components/login";
 import CalculatorInterface from "@/components/calculator-interface";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SignUp from "@/components/sign-up";
 import GetRecords from "@/components/get-records";
 export default function Home() {
   const [showLoginPage, setShowLoginPage] = useState(true);
   const [showSignUpPage, setShowSignUpPage] = useState(false);
+  const [displayCreateAccountSection, setdisplayCreateAccountSection] =
+    useState(true);
+
+  const [message, setMessage] = useState(false);
+  
+  useEffect(() => {
+    message && setShowLoginPage(false)
+  }, [message])
+  
+
+    const handleMessage = (newMessage) => {
+      setMessage(newMessage);}
 
   const handleLoginPage = () => {
     setShowLoginPage(true);
     setShowSignUpPage(false);
+    setdisplayCreateAccountSection(false);
   };
   const handleSignUpPage = () => {
     setShowSignUpPage(true);
@@ -42,29 +55,64 @@ export default function Home() {
           justifyContent: "center",
           alignItems: "center",
           marginTop: "5em",
+          width: "100%",
         }}
       >
-        {/* <div style={{ display: "flex" }}>
-          <button
-            type="button"
-            class="btn btn-light"
-            style={{ marginRight: "1em" }}
-            onClick={handleSignUpPage}
-          >
-            Create Account
-          </button>
+        {showLoginPage && (
+          <>
+            <div style={{ display: "flex" }}>
+              <button
+                type="button"
+                class="btn btn-light"
+                style={{ marginRight: "1em" }}
+                onClick={handleSignUpPage}
+              >
+                Create Account
+              </button>
 
-          <button type="button" class="btn btn-light" onClick={handleLoginPage}>
-            Already Have An Account
-          </button>
-        </div> */}
-        {/* {showLoginPage && <LoginComponent />}
-        {showSignUpPage && <SignUp />} */}
-        {/* <div className="animate__animated animate__fadeInDown">
-          <CalculatorInterface />
-        </div> */}
+              <button
+                type="button"
+                class="btn btn-light"
+                onClick={handleLoginPage}
+              >
+                Already Have An Account
+              </button>
+            </div>
+            <LoginComponent onMessage={handleMessage} />
+          </>
+        )}
+        {showSignUpPage && (
+          <>
+            <div style={{ display: "flex" }}>
+              <button
+                type="button"
+                class="btn btn-light"
+                style={{ marginRight: "1em" }}
+                onClick={handleSignUpPage}
+              >
+                Create Account
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-light"
+                onClick={handleLoginPage}
+              >
+                Already Have An Account
+              </button>
+            </div>
+            <SignUp />
+          </>
+        )}
       </div>
-      <GetRecords />
+      {message && (
+        <>
+          <div className="animate__animated animate__fadeInDown">
+            <CalculatorInterface />
+          </div>
+          <GetRecords />
+        </>
+      )}
     </div>
   );
 }

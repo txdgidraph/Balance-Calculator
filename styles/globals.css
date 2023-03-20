@@ -1,13 +1,19 @@
-
-html, body {width: auto!important; overflow-x: hidden!important} 
+html,
+body {
+  width: auto !important;
+  overflow-x: hidden !important;
+}
 body {
   margin: 0;
   padding: 0;
 }
 .homepage-container {
-  background-image: url("/assets/wallpaper-one.jpeg");
-  height: 100vh;
+  /* background-image: url("/assets/wallpaper-one.jpeg"); */
+  background-image: linear-gradient(to right, #380036, #0cbaba);
+  width: 100vw;
+  /* height: 1000vh; */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover;
+  padding-bottom: 5em;
 }

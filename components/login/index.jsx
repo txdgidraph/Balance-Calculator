@@ -1,12 +1,13 @@
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const LoginComponent = () => {
+const LoginComponent = (props) => {
   const [query, setQuery] = useState({
     userName: "",
     password: "",
   });
-
+  
+  const [loginState, setLoginState] = useState(false);
   const handleUserNameChange = (e) => {
     const { name, value } = e.target;
     setQuery((prevState) => ({ ...prevState, [name]: value }));
@@ -16,26 +17,41 @@ const LoginComponent = () => {
     const { name, value } = e.target;
     setQuery((prevState) => ({ ...prevState, [name]: value }));
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
+    props.onMessage(loginState);
     var axios = require("axios");
-
-    var config = {
-      method: "get",
-      url: "http://192.168.1.27:8081/users/Giddi@gmail.com",
-      headers: {},
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    var data = JSON.stringify({
+      userName: query.userName,
+      password: query.password,
+    });
+  var config = {
+    method: "post",
+    url: "http://192.168.1.27:8081/users/logIn",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: data,
   };
-  console.log(query.userName);
+
+  axios(config)
+    .then(function (response) {
+      if(response.data.token == "true"){
+        setLoginState(true)
+      };
+      console.log("state hii = ", loginState)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  };
+
+  useEffect(() => {
+    props.onMessage(loginState);
+  }, [loginState]);
+
+loginState && localStorage.setItem("email", query.userName);
   return (
     <div>
       <Head>
@@ -60,7 +76,12 @@ const LoginComponent = () => {
               <h3>Sign In</h3>
             </div>
             <div class="card-body">
-              <form>
+              <form
+                acceptCharset="UTF-8"
+                enctype="multipart/form-data"
+                id="ajaxForm"
+                onSubmit={handleSubmit}
+              >
                 <div class="input-group form-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
